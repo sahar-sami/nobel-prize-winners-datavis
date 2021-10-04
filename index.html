@@ -1,0 +1,91 @@
+<html>
+
+<head>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .gridlines .domain {
+      display: none;
+    }
+
+    .gridlines line {
+      stroke: #444;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="vis1"></div>
+  <div id="vis2"></div>
+  <div id="vis3"></div>
+  <div id="vis4"></div>
+  <script>
+    d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
+      data = data.filter(d => d['born'] != null && d['born'] != '0000/00/00' && d['year'] != null && d['category'] != null);
+
+      const svg3 = d3.select('div#vis2').append('svg')
+        .attr('width', 700)
+        .attr('height', 400);
+      let margins = { 'left': 100, 'top': 10, 'bottom': 30, 'right': 10 };
+      let chartArea = svg3.append('g').attr('transform', `translate(${margins.left},${margins.top})`);
+      let chartWidth = svg3.attr('width') - margins.left - margins.right;
+      let chartHeight = svg3.attr('height') - margins.top - margins.bottom;
+      data.forEach(d => {
+        let birthYear = Number(d['born'].substring(d['born'].length - 4));
+        d['age'] = d['year'] - birthYear;
+      })
+      console.log(data);
+      const categories = ['peace', 'chemistry', 'physics', 'medicine', 'literature', 'economics'];
+      const categoryPositions = [...Array(6).keys()].map(x => chartHeight / 12 + x * (chartHeight / 6));
+      console.log(categoryPositions);
+      const categoryScale = d3.scaleOrdinal().domain(categories).range(categoryPositions);
+      const ageMax = d3.max(data, d => d['age']) + 10;
+      const ageScale = d3.scaleLinear().domain([0, ageMax]).range([0, chartWidth]);
+
+      let leftAxis = d3.axisLeft(categoryScale);
+      svg3.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + (margins.left - 10) + "," + margins.top + ")")
+        .call(leftAxis)
+
+      let bottomAxis = d3.axisBottom(ageScale)
+      let bottomGridlines = d3.axisBottom(ageScale)
+        .tickSize(-chartHeight - 10)
+        .tickFormat("")
+      svg3.append("g")
+        .attr("class", "x axis")
+        .attr("transform", `translate(${margins.left},${chartHeight + margins.top + 10})`)
+        .call(bottomAxis);
+      svg3.append("g")
+        .attr("class", "x gridlines")
+        .attr("transform", `translate(${margins.left},${chartHeight + margins.top + 10})`)
+        .call(bottomGridlines);
+
+      data.forEach(d => {
+        if (d['gender'] == 'male') {
+          chartArea.append('circle')
+            .attr('cx', ageScale(d['age']))
+            .attr('cy', categoryScale(d['category']) + 10)
+            .attr('r', 5)
+            .style('fill', 'steelblue')
+            .style('opacity', 0.7);
+        }
+        else {
+          chartArea.append('circle')
+            .attr('cx', ageScale(d['age']))
+            .attr('cy', categoryScale(d['category']) - 10)
+            .attr('r', 5)
+            .style('fill', 'pink')
+            .style('opacity', 0.7);
+        }
+      })
+
+
+
+
+    })
+
+
+  </script>
+</body>
+
+</html>>
