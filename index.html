@@ -10,10 +10,15 @@
     .gridlines line {
       stroke: #444;
     }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif
+    }
   </style>
 </head>
 
 <body>
+  <h1>Nobel Prize Winners</h1>
   <div id="vis1"></div>
 
   <script>
@@ -121,8 +126,13 @@
 
 
   </script>
-  <div id="vis2"></div>
-  <div id="vis3"></div>
+
+  <div id="vis2">
+  </div>
+  </div>
+  <div id="vis3">
+    Ages of Nobel Prize Winners by Category and Sex
+  </div>
   <div id="vis4"></div>
   <script>
     /*
@@ -131,12 +141,12 @@
     suggested maybe not having pink and blue differentiate gender but maybe shapes,
     */
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
-      data = data.filter(d => d['born'] != null && d['born'] != '0000/00/00' && d['year'] != null && d['category'] != null);
+      data = data.filter(d => (d['born'] != null && d['born'] != '0000/00/00' && d['year'] != null && d['category'] != null));
 
-      const svg3 = d3.select('div#vis2').append('svg')
-        .attr('width', 700)
+      const svg3 = d3.select('div#vis3').append('svg')
+        .attr('width', 1000)
         .attr('height', 400);
-      let margins = { 'left': 100, 'top': 10, 'bottom': 30, 'right': 10 };
+      let margins = { 'left': 10, 'top': 10, 'bottom': 30, 'right': 100 };
       let chartArea = svg3.append('g').attr('transform', `translate(${margins.left},${margins.top})`);
       let chartWidth = svg3.attr('width') - margins.left - margins.right;
       let chartHeight = svg3.attr('height') - margins.top - margins.bottom;
@@ -149,14 +159,16 @@
       const categoryPositions = [...Array(6).keys()].map(x => chartHeight / 12 + x * (chartHeight / 6));
       // console.log(categoryPositions);
       const categoryScale = d3.scaleOrdinal().domain(categories).range(categoryPositions);
-      const ageMax = d3.max(data, d => d['age']) + 10;
-      const ageScale = d3.scaleLinear().domain([0, ageMax]).range([0, chartWidth]);
+      const ageExtent = d3.extent(data, d => d['age']);
+      const ageScale = d3.scaleLinear().domain(ageExtent).range([0, chartWidth]);
 
-      let leftAxis = d3.axisLeft(categoryScale);
-      svg3.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(" + (margins.left - 10) + "," + margins.top + ")")
-        .call(leftAxis)
+      const sideLabels = svg3.append('g')
+        .attr('transform', `translate(${margins.left + chartWidth}, ${margins.top})`)
+
+      categories.forEach(cat => sideLabels.append('text')
+        .attr('x', 10)
+        .attr('y', categoryScale(cat))
+        .text(cat))
 
       let bottomAxis = d3.axisBottom(ageScale)
       let bottomGridlines = d3.axisBottom(ageScale)
@@ -164,33 +176,42 @@
         .tickFormat("")
       svg3.append("g")
         .attr("class", "x axis")
-        .attr("transform", `translate(${margins.left},${chartHeight + margins.top + 10})`)
+        .attr("transform", `translate(${margins.left}, ${chartHeight + margins.top + 10})`)
         .call(bottomAxis);
       svg3.append("g")
         .attr("class", "x gridlines")
-        .attr("transform", `translate(${margins.left},${chartHeight + margins.top + 10})`)
+        .attr("transform", `translate(${margins.left}, ${chartHeight + margins.top + 10})`)
         .call(bottomGridlines);
 
       data.forEach(d => {
         if (d['gender'] == 'male') {
           chartArea.append('circle')
             .attr('cx', ageScale(d['age']))
-            .attr('cy', categoryScale(d['category']) + 10)
+            .attr('cy', categoryScale(d['category']) + 15)
             .attr('r', 5)
             .style('fill', 'steelblue')
-            .style('opacity', 0.7);
+            .style('opacity', 0.5);
+        }
+        if (d['gender'] == 'org') {
+          chartArea.append('circle')
+            .attr('cx', ageScale(d['age']))
+            .attr('cy', categoryScale(d['category']))
+            .attr('r', 5)
+            .style('fill', 'purple')
+            .style('opacity', 0.5);
         }
         else {
           chartArea.append('circle')
             .attr('cx', ageScale(d['age']))
-            .attr('cy', categoryScale(d['category']) - 10)
+            .attr('cy', categoryScale(d['category']) - 15)
             .attr('r', 5)
-            .style('fill', 'pink')
-            .style('opacity', 0.7);
+            .style('fill', 'red')
+            .style('opacity', 0.5);
         }
       })
-
-
+      d3.select("div#vis3").append('div').attr("id", "legend3");
+      d3.select("#legend3").append('span').text('female').style('color', 'red')
+      d3.select("#legend3").append('span').text(' male').style('color', 'blue')
 
 
     })
@@ -199,4 +220,4 @@
   </script>
 </body>
 
-</html>>
+</html>
