@@ -123,8 +123,6 @@
            .attr("stroke-width", 3)
            .attr("d", lineGen);
     })
-
-
   </script>
 
   <div id="vis2">
@@ -135,11 +133,6 @@
   </div>
   <div id="vis4"></div>
   <script>
-    /*
-    feedback: make the graph wider or have opacity lower to see the circles clearler
-    have a horizontal gridline, 
-    suggested maybe not having pink and blue differentiate gender but maybe shapes,
-    */
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
       data = data.filter(d => (d['born'] != null && d['born'] != '0000/00/00' && d['year'] != null && d['category'] != null));
 
