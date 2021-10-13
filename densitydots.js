@@ -59,18 +59,18 @@ function densitydots(svg, data) {
 }
 
 function densitydotslegend() {
-  d3.select("div#vis3")
+  d3.select("div#vis2")
     .append('div')
-    .attr("id", "legend3")
+    .attr("id", "legend2")
     .style('background-color', '#f7f7f7')
     .style('border', '1px solid black')
     .style('width', 'max-content');
-  let female_guide = d3.select("#legend3").append('div')
+  let female_guide = d3.select("#legend2").append('div')
     .attr("id", "female")
     .style('padding-left', '10')
     .style('display', 'inline')
   female_guide.append('text').text('female').style('color', 'red')
-  let male_guide = d3.select("#legend3")
+  let male_guide = d3.select("#legend2")
     .append('div')
     .attr("id", "female")
     .style('padding-left', '10')
@@ -78,8 +78,8 @@ function densitydotslegend() {
     .style('display', 'inline')
   male_guide.append('text').text('male').style('color', 'blue')
 
-  let lumScale1 = d3.select("div#vis3").append('svg').attr('width', 100).attr('height', 20);
-  let lumScale2 = d3.select("div#vis3").append('svg').attr('width', 100).attr('height', 20);
+  let lumScale1 = d3.select("div#vis2").append('svg').attr('width', 100).attr('height', 20);
+  let lumScale2 = d3.select("div#vis2").append('svg').attr('width', 100).attr('height', 20);
   for (i = 0; i < 5; i++) {
     for (j = 0; j <= i; j++) {
       lumScale1.append('rect')
