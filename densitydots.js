@@ -64,22 +64,25 @@ function densitydotslegend() {
     .attr("id", "legend2")
     .style('background-color', '#f7f7f7')
     .style('border', '1px solid black')
-    .style('width', 'max-content');
+    .style('width', 'max-content')
+    .style('padding', '10 20 10 20')
   let female_guide = d3.select("#legend2").append('div')
     .attr("id", "female")
-    .style('padding-left', '10')
+    .style('color', 'red')
+  female_guide.append('text')
+    .text('female')
     .style('display', 'inline')
-  female_guide.append('text').text('female').style('color', 'red')
+    .style('padding-right', '10')
+  female_guide.append('text').text('1 person').style('padding-right', 5)
   let male_guide = d3.select("#legend2")
     .append('div')
-    .attr("id", "female")
-    .style('padding-left', '10')
-    .style('padding-right', '10')
-    .style('display', 'inline')
-  male_guide.append('text').text('male').style('color', 'blue')
+    .attr("id", "male")
+    .style('color', 'steelblue')
+  male_guide.append('text').text('male').style('padding-right', '10')
+  male_guide.append('text').text('1 person').style('padding-right', 5)
 
-  let lumScale1 = d3.select("div#vis2").append('svg').attr('width', 100).attr('height', 20);
-  let lumScale2 = d3.select("div#vis2").append('svg').attr('width', 100).attr('height', 20);
+  let lumScale1 = d3.select("#male").append('svg').attr('width', 100).attr('height', 20);
+  let lumScale2 = d3.select("#female").append('svg').attr('width', 100).attr('height', 20);
   for (i = 0; i < 5; i++) {
     for (j = 0; j <= i; j++) {
       lumScale1.append('rect')
@@ -99,7 +102,8 @@ function densitydotslegend() {
         .style('opacity', 0.3)
     }
   }
-  // TODO: add another guide to show how the luminosity corresponds to people
+  female_guide.append('text').text('5 people').style('padding-left', 5)
+  male_guide.append('text').text('5 people').style('padding-left', 5)
 
 
 }
