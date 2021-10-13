@@ -14,16 +14,32 @@ function densitydots(svg, data) {
   const categories = ['peace', 'chemistry', 'physics', 'medicine', 'literature', 'economics'];
   const categoryPositions = [...Array(6).keys()].map(x => chartHeight / 12 + x * (chartHeight / 6));
   const categoryScale = d3.scaleOrdinal().domain(categories).range(categoryPositions);
+  console.log(categoryScale.range());
   const ageMax = d3.max(data, d => d['age']);
   const ageScale = d3.scaleLinear().domain([10, ageMax]).range([0, chartWidth]);
 
   const sideLabels = svg.append('g')
     .attr('transform', `translate(0, ${margins.top})`)
 
-  categories.forEach(cat => sideLabels.append('text')
-    .attr('x', 10)
-    .attr('y', categoryScale(cat))
-    .text(cat))
+  let i = 0;
+  categories.forEach(cat => {
+    sideLabels.append('text')
+      .attr('x', 10)
+      .attr('y', categoryScale(cat))
+      .attr('dominant-baseline', 'middle')
+      .text(cat);
+    if (i % 2 == 1) {
+      chartArea.append('rect')
+        .attr('x', 0)
+        .attr('y', categoryScale(cat) - 30)
+        .attr('width', chartWidth)
+        .attr('height', 60)
+        .style('stroke', 'lightgrey')
+        .style('stroke-width', 1)
+        .style('fill', 'none')
+    }
+    i++;
+  })
 
   let bottomAxis = d3.axisBottom(ageScale)
   let bottomGridlines = d3.axisBottom(ageScale)
