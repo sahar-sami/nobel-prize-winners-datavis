@@ -15,16 +15,6 @@
       d3.csv("nobel_prize_by_winner.csv").then((data)=>{
 
         let svg4 = d3.select('#svg4');
-        let width = svg4.attr('width');
-        let height = svg4.attr('height');
-        let margin = {
-          left: 10,
-          right: 10,
-          top: 10,
-          bottom: 10
-        };
-        // let radius = (height - margin.top - margin.bottom)/2;
-        // console.log(radius);
 
         const color_key = {
           'Harvard University': 'red',
