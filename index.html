@@ -2,6 +2,12 @@
 
 <head>
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script type="text/javascript" src="densitydots.js"></script>
+  <script type="text/javascript" src="linecat.js"></script>
+  <script type="text/javascript" src="linetotal.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <style>
     .gridlines .domain {
       display: none;
@@ -10,82 +16,82 @@
     .gridlines line {
       stroke: #444;
     }
+
+    body * {
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #vis1-category div {
+      display: inline;
+    }
+
+    #vis1-category h3 {
+      display: flex;
+    }
   </style>
 </head>
 
 <body>
-  <div id="vis1"></div>
-  <div id="vis2"></div>
-  <div id="vis3"></div>
+  <h1>Nobel Prize Winners</h1>
+  <div id="vis1">
+    <h2>Distribution of Sex for Different Categories of Awards Over Time</h2>
+    <h3>Distribution of Sex for All Nobel Awards Over Time</h3>
+    <div id="vis1-1">
+      <script>
+        linetotal();
+      </script>
+    </div>
+    <div id="vis1-category">
+      <div id="vis1-2">
+        <!-- <h3>Peace</h3> -->
+      </div>
+      <div id="vis1-3">
+        <!-- <h3>Chemistry
+        </h3> -->
+      </div>
+      <div id="vis1-4">
+        <!-- <h3>Physics</h3> -->
+
+      </div>
+      <div id="vis1-5">
+        <!-- <h3>Medicine</h3> -->
+
+      </div>
+      <div id="vis1-6">
+        <!-- <h3>Literature</h3> -->
+
+      </div>
+      <div id="vis1-7">
+        <!-- <h3>Economics</h3> -->
+
+      </div>
+    </div>
+    <script>
+      linecat();
+    </script>
+  </div>
+
+  <div id="vis2">
+    <h2>Ages of Nobel Prize Winners by Category and Sex</h2>
+  </div>
+  </div>
+  <div id="vis3">
+  </div>
   <div id="vis4"></div>
   <script>
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
-      data = data.filter(d => d['born'] != null && d['born'] != '0000/00/00' && d['year'] != null && d['category'] != null);
 
-      const svg3 = d3.select('div#vis2').append('svg')
-        .attr('width', 700)
+      const svg2 = d3.select('div#vis2').append('svg')
+        .attr('width', 1000)
         .attr('height', 400);
-      let margins = { 'left': 100, 'top': 10, 'bottom': 30, 'right': 10 };
-      let chartArea = svg3.append('g').attr('transform', `translate(${margins.left},${margins.top})`);
-      let chartWidth = svg3.attr('width') - margins.left - margins.right;
-      let chartHeight = svg3.attr('height') - margins.top - margins.bottom;
-      data.forEach(d => {
-        let birthYear = Number(d['born'].substring(d['born'].length - 4));
-        d['age'] = d['year'] - birthYear;
-      })
-      console.log(data);
-      const categories = ['peace', 'chemistry', 'physics', 'medicine', 'literature', 'economics'];
-      const categoryPositions = [...Array(6).keys()].map(x => chartHeight / 12 + x * (chartHeight / 6));
-      console.log(categoryPositions);
-      const categoryScale = d3.scaleOrdinal().domain(categories).range(categoryPositions);
-      const ageMax = d3.max(data, d => d['age']) + 10;
-      const ageScale = d3.scaleLinear().domain([0, ageMax]).range([0, chartWidth]);
 
-      let leftAxis = d3.axisLeft(categoryScale);
-      svg3.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(" + (margins.left - 10) + "," + margins.top + ")")
-        .call(leftAxis)
-
-      let bottomAxis = d3.axisBottom(ageScale)
-      let bottomGridlines = d3.axisBottom(ageScale)
-        .tickSize(-chartHeight - 10)
-        .tickFormat("")
-      svg3.append("g")
-        .attr("class", "x axis")
-        .attr("transform", `translate(${margins.left},${chartHeight + margins.top + 10})`)
-        .call(bottomAxis);
-      svg3.append("g")
-        .attr("class", "x gridlines")
-        .attr("transform", `translate(${margins.left},${chartHeight + margins.top + 10})`)
-        .call(bottomGridlines);
-
-      data.forEach(d => {
-        if (d['gender'] == 'male') {
-          chartArea.append('circle')
-            .attr('cx', ageScale(d['age']))
-            .attr('cy', categoryScale(d['category']) + 10)
-            .attr('r', 5)
-            .style('fill', 'steelblue')
-            .style('opacity', 0.7);
-        }
-        else {
-          chartArea.append('circle')
-            .attr('cx', ageScale(d['age']))
-            .attr('cy', categoryScale(d['category']) - 10)
-            .attr('r', 5)
-            .style('fill', 'pink')
-            .style('opacity', 0.7);
-        }
-      })
-
-
-
-
+      densitydots(svg2, data);
+      densitydotslegend();
     })
-
-
   </script>
 </body>
 
-</html>>
+</html>
