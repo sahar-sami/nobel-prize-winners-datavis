@@ -5,6 +5,7 @@
   <script type="text/javascript" src="densitydots.js"></script>
   <script type="text/javascript" src="linecat.js"></script>
   <script type="text/javascript" src="linetotal.js"></script>
+  <script type="text/javascript" src="piechart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
@@ -59,7 +60,9 @@
   </div>
   <div id="vis3">
   </div>
-  <div id="vis4"></div>
+  <div id="vis4">
+    <h2>Nobel Prize Winners from the Ivy League</h2>
+  </div>
   <script>
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
 
@@ -70,6 +73,8 @@
       densitydots(svg2, data);
       densitydotslegend();
     })
+
+    piecharts();
   </script>
 </body>
 
