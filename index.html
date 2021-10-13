@@ -127,6 +127,7 @@
       })
     </script>
   </div>
+  <div id = "vis1-category">
   <div id="vis1-2">  
     <h3>Distribution of Sex for Nobel Peace Awards Over Time</h3>
   </div>
@@ -150,9 +151,10 @@
     <h3>Distribution of Sex for Nobel Economics Awards Over Time</h3>
 
   </div>
+</div>
 
     <script>
-      function category (category, upper, num){
+      function category (category, num){
       d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
         let vis = 'div#vis1-'+num;
         console.log(vis);
@@ -192,9 +194,12 @@
           femSum += value;
           femTotal[key] = femSum;
         }
+        const yearExtent = d3.extent(data, d => d['year']);
+        femTotal[yearExtent[1]] = femSum;
+
         const svg = d3.select(vis).append('svg')
-          .attr('width', 800)
-          .attr('height', 400);
+          .attr('width', 600)
+          .attr('height', 300);
         let margins = { 'left': 40, 'top': 10, 'bottom': 30, 'right': 10 };
         let chartArea = svg.append('g').attr('transform', `translate(${margins.left},${margins.top})`);
         let chartWidth = svg.attr('width') - margins.left - margins.right;
@@ -202,7 +207,6 @@
   
         const totalScale = d3.scaleLinear().domain([0, menSum + 50 ]).range([chartHeight, 0]);
   
-        const yearExtent = d3.extent(data, d => d['year']);
         const yearScale = d3.scaleLinear().domain([yearExtent[0]-1, yearExtent[1]]).range([0, chartWidth]);
   
         let leftAxis = d3.axisLeft(totalScale);
@@ -259,8 +263,7 @@
     const categories = ['peace', 'chemistry', 'physics', 'medicine', 'literature', 'economics'];
     let num = 2;
     categories.forEach(name => {
-      let upper = name.charAt(0).toUpperCase() + name.slice(1);
-      category(name, upper, num);
+      category(name, num);
       num ++;
     })
  
