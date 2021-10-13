@@ -97,9 +97,10 @@ function densitydotslegend() {
   male_guide.append('text').text('male').style('padding-right', '10')
   male_guide.append('text').text('1 person').style('padding-right', 5)
 
-  let lumScale1 = d3.select("#male").append('svg').attr('width', 100).attr('height', 20);
+  let lumScale1 = d3.select("#male").append('svg').attr('width', 140).attr('height', 20);
   let lumScale2 = d3.select("#female").append('svg').attr('width', 100).attr('height', 20);
-  for (i = 0; i < 5; i++) {
+
+  for (i = 0; i < 7; i++) {
     for (j = 0; j <= i; j++) {
       lumScale1.append('rect')
         .attr('x', 20 * i)
@@ -108,7 +109,11 @@ function densitydotslegend() {
         .attr('height', 20)
         .style('fill', 'steelblue')
         .style('opacity', 0.3)
+    }
+  }
 
+  for (i = 0; i < 5; i++) {
+    for (j = 0; j <= i; j++) {
       lumScale2.append('rect')
         .attr('x', 20 * i)
         .attr('y', 0)
@@ -119,7 +124,7 @@ function densitydotslegend() {
     }
   }
   female_guide.append('text').text('5 people').style('padding-left', 5)
-  male_guide.append('text').text('5 people').style('padding-left', 5)
+  male_guide.append('text').text('7 people').style('padding-left', 5)
 
 
 }

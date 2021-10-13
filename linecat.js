@@ -1,8 +1,6 @@
 function linecat() {
-  function category(category, num) {
+  function category(category) {
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then((data) => {
-      let vis = 'div#vis1-' + num;
-      console.log(vis);
       console.log(data);
       let menCount = data.filter(
         (d) => d['gender'] == 'male' && d['category'] == category
@@ -138,7 +136,7 @@ function linecat() {
       chartArea.append("circle")
         .attr('cx', yearScale(Object.entries(femTotal)[0][0]))
         .attr('cy', totalScale(Object.entries(femTotal)[0][1]))
-        .attr('r', 3)
+        .attr('r', 4)
         .style('fill', 'pink')
 
       let title = category.charAt().toUpperCase() + category.substring(1) + " awards";
@@ -153,9 +151,7 @@ function linecat() {
     'literature',
     'economics',
   ];
-  let num = 2;
   categories.forEach((name) => {
-    category(name, num);
-    num++;
+    category(name);
   });
 }
