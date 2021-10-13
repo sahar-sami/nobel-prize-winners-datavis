@@ -130,16 +130,18 @@ function linecat() {
         .datum(Object.entries(femTotal))
         .attr('class', 'line')
         .attr('fill', 'none')
-        .attr('stroke', 'pink')
+        .attr('stroke', 'red')
         .attr('stroke-width', 3)
         .attr('d', lineGen);
-      chartArea.append("circle")
+      chartArea
+        .append('circle')
         .attr('cx', yearScale(Object.entries(femTotal)[0][0]))
         .attr('cy', totalScale(Object.entries(femTotal)[0][1]))
         .attr('r', 4)
-        .style('fill', 'pink')
+        .style('fill', 'red');
 
-      let title = category.charAt().toUpperCase() + category.substring(1) + " awards";
+      let title =
+        category.charAt().toUpperCase() + category.substring(1) + ' awards';
       svg.append('text').text(title).attr('x', 20).attr('y', 20);
     });
   }

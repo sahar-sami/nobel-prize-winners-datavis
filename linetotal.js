@@ -124,7 +124,7 @@ function linetotal() {
       .datum(Object.entries(femTotal))
       .attr('class', 'line')
       .attr('fill', 'none')
-      .attr('stroke', 'pink')
+      .attr('stroke', 'red')
       .attr('stroke-width', 3)
       .attr('d', lineGen);
   });
