@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <svg id='svg4' height="500" width="500" style="background: #F5F5F5"></svg>
+    </div>
+    <script>
+      
+      d3.csv("nobel_prize_by_winner.csv").then((data)=>{
+        let svg4 = d3.select('#svg4');
+        let width = svg4.attr('width');
+        let height = svg4.attr('height');
+        let margin = {
+          left: 10,
+          right: 10,
+          top: 10,
+          bottom: 10
+        };
+        let radius = (height - margin.top - margin.bottom)/2;
+        console.log(radius);
+
+        data = data.filter(d => d.name === 'Harvard University' 
+        || d.name === 'Columbia University' 
+        || d.name === 'Cornell University'
+        || d.name === 'University of Pennsylvania'
+        || d.name === 'Yale University'
+        || d.name === 'Dartmouth University'
+        || d.name === 'Brown University'
+        || d.name === 'Princeton University' );
+       
+        data_physics = data.filter(d => d.category === 'physics');
+        data_chemistry = data.filter(d => d.category === 'chemistry');
+        data_medicine = data.filter(d => d.category === 'medicine');
+        data_peace = data.filter(d => d.category === 'peace');
+        data_literature = data.filter(d => d.category === 'literature');
+        data_economics = data.filter(d => d.category === 'economics');
+
+        const color_key = {
+          'Harvard University': 'red',
+          'Columbia University': 'blue',
+          'Cornell University': 'yellow',
+          'University of Pennsylvania': 'green',
+          'Yale University': 'grey',
+          'Dartmouth University': 'purple',
+          'Brown University': 'violet',
+          'Princeton University': 'orange',
+        }
+
+
+        function categoryCount(data){
+          const count_dict = {
+            'Harvard University': data.filter(d => d.name === 'Harvard University').length,
+            'Columbia University': data.filter(d => d.name === 'Columbia University').length,
+            'Cornell University': data.filter(d => d.name === 'Cornell University').length,
+            'University of Pennsylvania': data.filter(d => d.name === 'University of Pennsylvania').length,
+            'Yale University': data.filter(d => d.name === 'Yale University').length,
+            'Dartmouth University': data.filter(d => d.name === 'Dartmouth University').length,
+            'Brown University': data.filter(d => d.name === 'Brown University').length,
+            'Princeton University': data.filter(d => d.name === 'Princeton University').length,
+          }
+          return count_dict;
+        }
+      const physics_centerpoint = {
+        x: 75,
+        y: 175
+      };
+
+      const chemistry_centerpoint = {
+        x: 225,
+        y: 175
+      };
+
+      const medicine_centerpoint = {
+        x: 375,
+        y:175
+      };
+      
+      const translation_amount={
+          'physics': physics_centerpoint,
+          'chemistry': chemistry_centerpoint,
+          'medicine':medicine_centerpoint,
+          'University of Pennsylvania': physics_centerpoint,
+          'Yale University': physics_centerpoint,
+          'Dartmouth University': physics_centerpoint,
+          'Brown University': physics_centerpoint,
+          'Princeton University': physics_centerpoint,
+      };   
+      
+      //the declaration and use of pie() is referenced from https://www.d3-graph-gallery.com/graph/pie_annotation.html
+       let pieGraph = d3.pie().value(function(d) {return d[1]; })
+
+       let data_physics_pie = pieGraph(Object.entries(categoryCount(data_physics)));
+       let data_chemistry_pie = pieGraph(Object.entries(categoryCount(data_chemistry)));
+       let data_medicine_pie = pieGraph(Object.entries(categoryCount(data_medicine)));
+
+       //arc() is referenced from 
+       let arc = d3.arc().innerRadius(0).outerRadius(50);
+      //function generates different pie charts for each nobel prize category                      
+      function generatePie(data, category){
+        svg4.append('text')
+          .attr("y",translation_amount[category].y - 55)
+          .attr('x', translation_amount[category].x)
+          .style('text-anchor','middle')
+          .text(category)
+
+        svg4
+          .selectAll('pieCharts' + category)
+          .data(data)
+          .enter()
+          .append("g")
+          .attr("transform", "translate(" + translation_amount[category].x + "," + translation_amount[category].y + ")")
+          .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d){ return(color_key[d.data[0]]) })
+            .attr("stroke", "black")
+            .style("stroke-width", "1px")
+            .style("opacity", 0.5)
+      }
+
+      generatePie(data_physics_pie, 'physics');
+      generatePie(data_chemistry_pie, 'chemistry')
+      generatePie(data_medicine_pie, 'medicine');
+
+
+       
+      // svg4
+      //     .selectAll('chemistryPieChart')
+      //     .data(data_chemistry_pie)
+      //     .enter()
+      //     .append("g")
+      //     .attr("transform", "translate(" + translation_amount['chemistry'].x + "," + translation_amount['chemistry'].y + ")")
+      //     .append('path')
+      //       .attr('d', arc)
+      //       .attr('fill', function(d){ return(color_key[d.data[0]]) })
+      //       .attr("stroke", "black")
+      //       .style("stroke-width", "1px")
+      //       .style("opacity", 0.5)
+      });
+
+      
+      
+    </script>
+  </body>
+</html>
