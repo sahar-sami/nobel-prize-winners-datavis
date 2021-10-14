@@ -79,7 +79,7 @@
   <div id="vis3">
     <h2>Top 5 Countries with most Noble Prize Winners</h2>
     <p>Where does ingenuity come from? Using Noble Prize Winners as a measure<br>
-      we can quantify the regions of the world with the most number of Noble Prizes. <br>
+      we can quantify the regions of the world with the most "ingenuity". <br>
       Why 5? Well, they were by far larger than the 29 other countries that have historically <br>
       won Noble Prizes.<br>
     </p>
@@ -87,7 +87,10 @@
   </div>
   <div id="vis4">
     <h2>Nobel Prize Winners from the Ivy League</h2>
-
+     <p>Looking at the home countries of the Nobel laureates is insightful. What about their education? Their place of research and thought?<br>
+     Where do they come up with their brilliant ideas and breakthrough discoveries?<br>
+    We decided to take a look at the Nobel winners from the Ivy Leagues. 
+    </p>
   </div>
   <script>
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
@@ -103,8 +106,6 @@
       // bargraphs(svg3, data);
       bargraphs2();
     })
-
-
 
     piecharts();
   </script>
