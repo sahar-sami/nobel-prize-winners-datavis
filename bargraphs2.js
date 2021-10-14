@@ -1,10 +1,10 @@
 function bargraphs2() {
   d3.csv('nobel_prize_by_winner.csv', d3.autoType).then((data) => {
     data = data.filter(d => d['country'] != null && d['gender'] != null && d['gender'] != "org" && (d['country'] == "USA" || d['country'] == "Germany" || d['country'] == "France" || d['country'] == "United Kingdom" || d['country'] == "Switzerland"));
-    const svg = d3.select("#vis3").append('svg').attr('width', 725).attr('height', 500);
+    const svg = d3.select("#vis3").append('svg').attr('width', 725).attr('height', 350);
     const width = svg.attr('width');
     const height = svg.attr('height');
-    const margins = { top: 50, right: 5, left: 100, bottom: 5 };
+    const margins = { top: 50, right: 5, left: 100, bottom: 30 };
     let chartArea = svg.append('g').attr('transform', `translate(${margins.left},${margins.top})`);
     let chartWidth = width - margins.left - margins.right;
     let chartHeight = height - margins.top - margins.bottom;
@@ -55,30 +55,31 @@ function bargraphs2() {
         .attr('x', 0)
         .attr('y', y + 20)
         .attr('dominant-baseline', 'middle')
-        .attr('font-size', '1.5em')
+        .attr('font-size', '0.8em')
         .text(val.country);
-      if (count % 2 == 0) {
-        chartArea.append('rect')
-          .attr('width', numberScale(val.total))
-          .attr('x', 100)
-          .attr('opacity', 0.4)
-          .attr('y', y)
-          .attr('height', 50)
-          .text(val.totals)
-          .style('fill', 'darkblue');
-      }
-      else {
-        chartArea.append('rect')
-          .attr('width', numberScale(val.totals))
-          .attr('x', 100)
-          .attr('opacity', 0.4)
-          .attr('y', y)
-          .attr('height', 50)
-          .style('fill', 'green');
-      }
+      chartArea.append('rect')
+        .attr('width', numberScale(val.male))
+        .attr('x', 0)
+        .attr('opacity', 0.4)
+        .attr('y', y)
+        .attr('height', 50)
+        .text(val.totals)
+        .style('fill', 'darkblue');
+
+      chartArea.append('rect')
+        .attr('width', numberScale(val.female))
+        .attr('x', numberScale(val.male))
+        .attr('opacity', 0.4)
+        .attr('y', y)
+        .attr('height', 50)
+        .style('fill', 'pink');
+
       count += 1;
-      y += 20;
+      y += 50;
     };
+
+
+
 
 
   })
