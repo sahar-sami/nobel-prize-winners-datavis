@@ -57,7 +57,14 @@ function piecharts() {
     createColorKey(85, 160, 'Brown University');
     createColorKey(85, 185, 'Princeton University');
 
-
+    let categoryCounts = {
+      'peace': data.filter(d => d.category === 'peace').length,
+      'chemistry': data.filter(d => d.category === 'chemistry').length,
+      'medicine': data.filter(d => d.category === 'medicine').length,
+      'physics': data.filter(d => d.category === 'physics').length,
+      'literature': data.filter(d => d.category === 'literature').length,
+      'economics': data.filter(d => d.category === 'economics').length
+    };
 
     data = data.filter(d => d.name === 'Harvard University'
       || d.name === 'Columbia University'
@@ -138,7 +145,7 @@ function piecharts() {
         .attr('y', translation_amount[category].y - 90)
         .attr('x', translation_amount[category].x)
         .style('text-anchor', 'middle')
-        .text(category)
+        .text(category + ": total = " + categoryCounts[category])
 
 
       svg4.selectAll('pieCharts' + category)
