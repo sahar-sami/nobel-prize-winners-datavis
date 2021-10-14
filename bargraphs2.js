@@ -63,8 +63,8 @@ function bargraphs2() {
         .attr('opacity', 0.4)
         .attr('y', y)
         .attr('height', 50)
-        .text(val.totals)
-        .style('fill', 'darkblue');
+        .text(val.total)
+        .style('fill', 'steelblue');
 
       chartArea.append('rect')
         .attr('width', numberScale(val.female))
@@ -72,7 +72,24 @@ function bargraphs2() {
         .attr('opacity', 0.4)
         .attr('y', y)
         .attr('height', 50)
-        .style('fill', 'pink');
+        .style('fill', 'red');
+      if (val.country == "USA") {
+        chartArea.append('text')
+          .attr('x', numberScale(val.total) - 20)
+          .attr('y', y - 20)
+          .attr('dominant-baseline', 'middle')
+          .attr('font-size', '0.8em')
+          .text(val.total);
+      }
+      else {
+        chartArea.append('text')
+          .attr('x', numberScale(val.total) + 2)
+          .attr('y', y + 22)
+          .attr('dominant-baseline', 'middle')
+          .attr('font-size', '0.8em')
+          .text(val.total);
+      }
+
 
       count += 1;
       y += 50;
