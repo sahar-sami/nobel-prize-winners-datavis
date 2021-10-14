@@ -1,6 +1,6 @@
 function bargraphs(svg, svg1, data) {
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then((data) => {
-        data = data.filter((d) => { return ((d['country'] != null) && (d['country'] == "USA" || d['country'] == "Germany" || d['country'] == "the Netherlands" || d['country'] == "France" || d['country'] == "United Kingdom")); });
+        data = data.filter((d) => { return ((d['country'] != null) && (d['country'] == "USA" || d['country'] == "Germany" || d['country'] == "Switzerland" || d['country'] == "France" || d['country'] == "United Kingdom")); });
         data = data.filter((d) => { return (d['bornCountry'] != null); });
         const width = svg.attr('width');
         const height = svg.attr('height');
@@ -11,7 +11,7 @@ function bargraphs(svg, svg1, data) {
         var winningCountries = {};
         var bornCountries = {};
         data.forEach(d => {
-            if ((!(d['country'] in winningCountries)) && (d['country'] == "USA" || d['country'] == "Germany" || d['country'] == "the Netherlands" || d['country'] == "France" || d['country'] == "United Kingdom")) {
+            if ((!(d['country'] in winningCountries)) && (d['country'] == "USA" || d['country'] == "Germany" || d['country'] == "Switzerland" || d['country'] == "France" || d['country'] == "United Kingdom")) {
                 winningCountries[d['country']] = 1;
             }
             else {
