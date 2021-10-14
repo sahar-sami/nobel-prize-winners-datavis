@@ -98,6 +98,8 @@ function linetotal() {
         `translate(${margins.left},${chartHeight + margins.top})`
       )
       .call(bottomGridlines);
+    console.log(femSum);
+    console.log(menSum);
 
     var lineGen = d3
       .line()

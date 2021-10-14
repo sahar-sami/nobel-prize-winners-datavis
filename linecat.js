@@ -60,7 +60,7 @@ function linecat() {
 
       const totalScale = d3
         .scaleLinear()
-        .domain([0, menSum + 50])
+        .domain([0, menSum + 10])
         .range([chartHeight, 0]);
 
       const yearScale = d3
