@@ -51,7 +51,7 @@ function linecat() {
         .append('svg')
         .attr('width', 600)
         .attr('height', 300);
-      let margins = { left: 40, top: 30, bottom: 30, right: 10 };
+      let margins = { left: 40, top: 30, bottom: 30, right: 15 };
       let chartArea = svg
         .append('g')
         .attr('transform', `translate(${margins.left},${margins.top})`);
@@ -145,6 +145,20 @@ function linecat() {
         .attr('cy', totalScale(Object.entries(menTotal)[0][1]))
         .attr('r', 4)
         .style('fill', 'steelblue');
+      chartArea
+        .append('text')
+        .attr('x', yearScale(yearExtent[1]))
+        .attr('y', totalScale(menSum))
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', '0.8em')
+        .text(menSum);
+      chartArea
+        .append('text')
+        .attr('x', yearScale(yearExtent[1]))
+        .attr('y', totalScale(femSum) - 5)
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', '0.8em')
+        .text(femSum);
       let title =
         category.charAt().toUpperCase() + category.substring(1) + ' awards';
       svg.append('text').text(title).attr('x', 20).attr('y', 20);
