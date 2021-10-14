@@ -139,7 +139,12 @@ function linecat() {
         .attr('cy', totalScale(Object.entries(femTotal)[0][1]))
         .attr('r', 4)
         .style('fill', 'red');
-
+      chartArea
+        .append('circle')
+        .attr('cx', yearScale(Object.entries(menTotal)[0][0]))
+        .attr('cy', totalScale(Object.entries(menTotal)[0][1]))
+        .attr('r', 4)
+        .style('fill', 'steelblue');
       let title =
         category.charAt().toUpperCase() + category.substring(1) + ' awards';
       svg.append('text').text(title).attr('x', 20).attr('y', 20);
