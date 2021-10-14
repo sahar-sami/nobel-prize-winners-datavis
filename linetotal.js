@@ -43,7 +43,7 @@ function linetotal() {
       .append('svg')
       .attr('width', 800)
       .attr('height', 400);
-    let margins = { left: 40, top: 10, bottom: 30, right: 10 };
+    let margins = { left: 40, top: 30, bottom: 30, right: 30 };
     let chartArea = svg
       .append('g')
       .attr('transform', `translate(${margins.left},${margins.top})`);
@@ -129,5 +129,20 @@ function linetotal() {
       .attr('stroke', 'red')
       .attr('stroke-width', 3)
       .attr('d', lineGen);
+
+    chartArea
+      .append('text')
+      .attr('x', yearScale(yearExtent[1]))
+      .attr('y', totalScale(menSum))
+      .attr('dominant-baseline', 'middle')
+      .attr('font-size', '0.8em')
+      .text(menSum);
+    chartArea
+      .append('text')
+      .attr('x', yearScale(yearExtent[1]))
+      .attr('y', totalScale(femSum) - 5)
+      .attr('dominant-baseline', 'middle')
+      .attr('font-size', '0.8em')
+      .text(femSum);
   });
 }
