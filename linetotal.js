@@ -1,4 +1,20 @@
 function linetotal() {
+  d3.select("div#vis1-1")
+    .append('div')
+    .attr("id", "legend1")
+    .style('background-color', '#f7f7f7')
+    .style('border', '1px solid black')
+    .style('width', 'max-content')
+    .style('padding', '10 20 10 20')
+  let female_guide = d3.select("#legend1").append('div')
+    .style('color', 'red')
+  female_guide.append('text')
+    .text('female')
+    .style('display', 'inline')
+  let male_guide = d3.select("#legend1")
+    .append('div')
+    .style('color', 'steelblue')
+  male_guide.append('text').text('male')
   d3.csv('nobel_prize_by_winner.csv', d3.autoType).then((data) => {
     let menCount = data.filter((d) => d['gender'] == 'male');
     let menDict = [];

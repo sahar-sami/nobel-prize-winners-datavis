@@ -100,4 +100,20 @@ function bargraphs2() {
 
 
   })
+  d3.select("div#vis3")
+    .append('div')
+    .attr("id", "legend3")
+    .style('background-color', '#f7f7f7')
+    .style('border', '1px solid black')
+    .style('width', 'max-content')
+    .style('padding', '10 20 10 20')
+  let female_guide = d3.select("#legend3").append('div')
+    .style('color', 'red')
+  female_guide.append('text')
+    .text('female')
+    .style('display', 'inline')
+  let male_guide = d3.select("#legend3")
+    .append('div')
+    .style('color', 'steelblue')
+  male_guide.append('text').text('male')
 }
