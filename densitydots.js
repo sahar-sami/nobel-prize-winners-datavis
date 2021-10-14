@@ -16,6 +16,7 @@ function densitydots(svg, data) {
   const categoryScale = d3.scaleOrdinal().domain(categories).range(categoryPositions);
   console.log(categoryScale.range());
   const ageMax = d3.max(data, d => d['age']);
+  console.log(data.find(d => d['age'] == ageMax));
   const ageScale = d3.scaleLinear().domain([10, ageMax]).range([0, chartWidth]);
 
   const sideLabels = svg.append('g')
