@@ -68,24 +68,23 @@ function piecharts() {
       || d.name === 'Brown University'
       || d.name === 'Princeton University');
 
-    data_physics = data.filter(d => d.category === 'physics');
-    data_chemistry = data.filter(d => d.category === 'chemistry');
-    data_medicine = data.filter(d => d.category === 'medicine');
-    data_peace = data.filter(d => d.category === 'peace');
-    data_economics = data.filter(d => d.category === 'economics');
+    let data_physics = data.filter(d => d.category === 'physics');
+    let data_chemistry = data.filter(d => d.category === 'chemistry');
+    let data_medicine = data.filter(d => d.category === 'medicine');
+    let data_peace = data.filter(d => d.category === 'peace');
+    let data_economics = data.filter(d => d.category === 'economics');
 
-    function categoryCount(data) {
-      const count_dict = {
-        'Harvard University': data.filter(d => d.name === 'Harvard University').length,
-        'Columbia University': data.filter(d => d.name === 'Columbia University').length,
-        'Cornell University': data.filter(d => d.name === 'Cornell University').length,
-        'University of Pennsylvania': data.filter(d => d.name === 'University of Pennsylvania').length,
-        'Yale University': data.filter(d => d.name === 'Yale University').length,
-        'Dartmouth University': data.filter(d => d.name === 'Dartmouth University').length,
-        'Brown University': data.filter(d => d.name === 'Brown University').length,
-        'Princeton University': data.filter(d => d.name === 'Princeton University').length,
-      }
-      return count_dict;
+    function categoryCount(data_category) {
+      return {
+        'Harvard University': data_category.filter(d => d.name === 'Harvard University').length,
+        'Columbia University': data_category.filter(d => d.name === 'Columbia University').length,
+        'Cornell University': data_category.filter(d => d.name === 'Cornell University').length,
+        'University of Pennsylvania': data_category.filter(d => d.name === 'University of Pennsylvania').length,
+        'Yale University': data_category.filter(d => d.name === 'Yale University').length,
+        'Dartmouth University': data_category.filter(d => d.name === 'Dartmouth University').length,
+        'Brown University': data_category.filter(d => d.name === 'Brown University').length,
+        'Princeton University': data_category.filter(d => d.name === 'Princeton University').length,
+      };
     }
     const physics_centerpoint = {
       x: 75,
@@ -134,7 +133,7 @@ function piecharts() {
 
 
     //function generates different pie charts for each nobel prize category                      
-    function generatePie(data, category) {
+    function generatePie(data_pie, category) {
       svg4.append('text')
         .attr('y', translation_amount[category].y - 90)
         .attr('x', translation_amount[category].x)
@@ -143,7 +142,7 @@ function piecharts() {
 
 
       svg4.selectAll('pieCharts' + category)
-        .data(data)
+        .data(data_pie)
         .join(
           function (enter) {
             return enter.append("g")
@@ -159,7 +158,7 @@ function piecharts() {
         )
 
       svg4.selectAll('pieCharts' + category)
-        .data(data)
+        .data(data_pie)
         .join(
           function (enter) {
             return enter.append('text')
