@@ -4,6 +4,7 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script type="text/javascript" src="densitydots.js"></script>
   <script type="text/javascript" src="linecat.js"></script>
+  <script type="text/javascript" src="bargraphs.js"></script>
   <script type="text/javascript" src="linetotal.js"></script>
   <script type="text/javascript" src="piechart.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,9 +76,17 @@
   </div>
   </div>
   <div id="vis3">
+    <h2>Top 5 Countries with most Noble Prize Winners</h2>
+    <p>Where does ingenuity come from? Using Noble Prize Winners as a measure<br>
+      we can quantify the regions of the world with the most number of Noble Prizes. <br>
+      Why 5? Well, they were by far larger than the 29 other countries that have historically <br>
+      won Noble Prizes.<br>
+    </p>
+    <svg id="countries" width="725" height="500"></svg>
   </div>
   <div id="vis4">
     <h2>Nobel Prize Winners from the Ivy League</h2>
+
   </div>
   <script>
     d3.csv('nobel_prize_by_winner.csv', d3.autoType).then(data => {
@@ -88,7 +97,12 @@
 
       densitydots(svg2, data);
       densitydotslegend();
+
+      const svg3 = d3.select("#countries");
+      bargraphs(svg3, data);
     })
+
+
 
     piecharts();
   </script>
