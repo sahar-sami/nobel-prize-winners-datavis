@@ -7,3 +7,6 @@ Authors: Sahar Sami, Amy Ouyang, Meghana Avvaru, Hannah Daniel
 ![image](https://user-images.githubusercontent.com/31807245/143729900-591f60ab-00f6-41b0-8353-df0b0cb680c1.png)
 ![image](https://user-images.githubusercontent.com/31807245/143729904-bb1fcf6d-059b-46f8-8337-f914792cff66.png)
 ![image](https://user-images.githubusercontent.com/31807245/143729913-9529d167-853e-4451-b5ad-1c3a74d67d82.png)
+
+
+(Class Project for INFO 3300: Data-Driven Web Applications)
